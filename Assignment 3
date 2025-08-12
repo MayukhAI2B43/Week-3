@@ -1,0 +1,151 @@
+//C CODE :-
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+int main() {
+    struct Node *head = NULL, *temp, *prev;
+    int n, i, pos;
+
+    // Create linked list
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++) {
+        struct Node* newNode = malloc(sizeof(struct Node));
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &newNode->data);
+        newNode->next = NULL;
+        if (head == NULL) {
+            head = newNode;
+        } else {
+            temp = head;
+            while (temp->next != NULL)
+                temp = temp->next;
+            temp->next = newNode;
+        }
+    }
+
+    // Delete node at given position
+    printf("Enter position to delete (1-based index): ");
+    scanf("%d", &pos);
+
+    if (pos == 1) {
+        temp = head;
+        head = head->next;
+        free(temp);
+    } else {
+        temp = head;
+        for (i = 1; i < pos && temp != NULL; i++) {
+            prev = temp;
+            temp = temp->next;
+        }
+        if (temp == NULL) {
+            printf("Position out of range!\n");
+        } else {
+            prev->next = temp->next;
+            free(temp);
+        }
+    }
+
+    // Display updated list
+    printf("Updated Linked List: ");
+    temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#PYTHON CODE :-
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+# Function to display linked list
+def display(head):
+    temp = head
+    while temp:
+        print(temp.data, end=" -> ")
+        temp = temp.next
+    print("NULL")
+
+# Create linked list
+n = int(input("Enter number of nodes: "))
+head = None
+for i in range(n):
+    data = int(input(f"Enter data for node {i+1}: "))
+    new_node = Node(data)
+    if head is None:
+        head = new_node
+    else:
+        temp = head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+
+# Delete node at given position
+pos = int(input("Enter position to delete (1-based index): "))
+
+if pos == 1:
+    head = head.next
+else:
+    temp = head
+    for i in range(1, pos - 1):
+        if temp is None:
+            print("Position out of range!")
+            break
+        temp = temp.next
+    else:
+        if temp.next is None:
+            print("Position out of range!")
+        else:
+            temp.next = temp.next.next
+
+# Display updated list
+print("Updated Linked List:")
+display(head)
