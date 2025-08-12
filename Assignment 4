@@ -1,0 +1,147 @@
+#PYTHON CODE :-
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+# Function to search an element
+def search(head, key):
+    pos = 1
+    temp = head
+    while temp:
+        if temp.data == key:
+            return pos
+        temp = temp.next
+        pos += 1
+    return -1
+
+# Function to display linked list
+def display(head):
+    temp = head
+    while temp:
+        print(temp.data, end=" -> ")
+        temp = temp.next
+    print("NULL")
+
+# Create linked list
+n = int(input("Enter number of nodes: "))
+head = None
+for i in range(n):
+    data = int(input(f"Enter data for node {i+1}: "))
+    new_node = Node(data)
+    if head is None:
+        head = new_node
+    else:
+        temp = head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+
+# Search element
+key = int(input("Enter element to search: "))
+pos = search(head, key)
+
+if pos != -1:
+    print(f"Element {key} found at position {pos}")
+else:
+    print(f"Element {key} not found in the list")
+
+# Display list
+print("Linked List:")
+display(head)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//C CODE:-
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to search an element
+int search(struct Node* head, int key) {
+    int pos = 1;
+    struct Node* temp = head;
+    while (temp != NULL) {
+        if (temp->data == key)
+            return pos;
+        temp = temp->next;
+        pos++;
+    }
+    return -1;
+}
+
+// Function to display linked list
+void display(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int n, data, key;
+    struct Node *head = NULL, *temp, *newNode;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &data);
+
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = data;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+        } else {
+            temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+
+    int pos = search(head, key);
+    if (pos != -1)
+        printf("Element %d found at position %d\n", key, pos);
+    else
+        printf("Element %d not found in the list\n", key);
+
+    printf("Linked List: ");
+    display(head);
+
+    return 0;
+}
