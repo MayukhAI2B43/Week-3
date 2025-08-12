@@ -1,0 +1,146 @@
+#PYTHON CODE :-
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def nth_from_end(head, n):
+    first = head
+    second = head
+    
+    # Move first pointer n steps ahead
+    for _ in range(n):
+        if first is None:
+            return None
+        first = first.next
+
+    # Move both pointers until first reaches end
+    while first:
+        first = first.next
+        second = second.next
+
+    return second.data
+
+# Create linked list
+n_nodes = int(input("Enter number of nodes: "))
+head = None
+for i in range(n_nodes):
+    data = int(input(f"Enter data for node {i+1}: "))
+    new_node = Node(data)
+    if head is None:
+        head = new_node
+    else:
+        temp = head
+        while temp.next:
+            temp = temp.next
+        temp.next = new_node
+
+# Get nth from end
+n = int(input("Enter n (from end): "))
+result = nth_from_end(head, n)
+if result is not None:
+    print(f"{n}th node from end is: {result}")
+else:
+    print("List is shorter than given n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//C CODE :-
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to find Nth node from end
+int nthFromEnd(struct Node* head, int n) {
+    struct Node *first = head, *second = head;
+
+    // Move first pointer n steps ahead
+    for (int i = 0; i < n; i++) {
+        if (first == NULL) return -1; // n is greater than list length
+        first = first->next;
+    }
+
+    // Move both until first reaches the end
+    while (first != NULL) {
+        first = first->next;
+        second = second->next;
+    }
+
+    return second->data;
+}
+
+int main() {
+    int n_nodes, data, n;
+    struct Node *head = NULL, *temp, *newNode;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &n_nodes);
+
+    for (int i = 0; i < n_nodes; i++) {
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &data);
+
+        newNode = (struct Node*)malloc(sizeof(struct Node));
+        newNode->data = data;
+        newNode->next = NULL;
+
+        if (head == NULL) {
+            head = newNode;
+        } else {
+            temp = head;
+            while (temp->next != NULL) {
+                temp = temp->next;
+            }
+            temp->next = newNode;
+        }
+    }
+
+    printf("Enter n (from end): ");
+    scanf("%d", &n);
+
+    int result = nthFromEnd(head, n);
+    if (result != -1)
+        printf("%dth node from end is: %d\n", n, result);
+    else
+        printf("List is shorter than given n\n");
+
+    return 0;
+}
