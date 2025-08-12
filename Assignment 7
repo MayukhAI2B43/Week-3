@@ -1,0 +1,145 @@
+#PYTHON CODE :-
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+def detect_and_remove_loop(head):
+    slow = head
+    fast = head
+
+    # Step 1: Detect loop
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+        if slow == fast:  # Loop found
+            break
+    else:
+        return  # No loop
+
+    # Step 2: Find start of loop
+    slow = head
+    while slow.next != fast.next:
+        slow = slow.next
+        fast = fast.next
+
+    # Step 3: Remove loop
+    fast.next = None
+
+def display(head):
+    temp = head
+    while temp:
+        print(temp.data, end=" -> ")
+        temp = temp.next
+    print("NULL")
+
+# Example
+head = Node(1)
+second = Node(2)
+third = Node(3)
+fourth = Node(4)
+
+head.next = second
+second.next = third
+third.next = fourth
+fourth.next = second  # Creates loop
+
+detect_and_remove_loop(head)
+display(head)  # Now list is linear
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//C CODE :-
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void removeLoop(struct Node* loop_node, struct Node* head) {
+    struct Node *ptr1 = head;
+    struct Node *ptr2 = loop_node;
+
+    // Move ptr2 until it reaches the node before ptr1
+    while (ptr1->next != ptr2->next) {
+        ptr1 = ptr1->next;
+        ptr2 = ptr2->next;
+    }
+    ptr2->next = NULL; // Break loop
+}
+
+void detectAndRemoveLoop(struct Node* head) {
+    struct Node *slow = head, *fast = head;
+
+    // Step 1: Detect loop
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+        if (slow == fast) {
+            removeLoop(slow, head);
+            return;
+        }
+    }
+}
+
+void printList(struct Node* node) {
+    while (node) {
+        printf("%d -> ", node->data);
+        node = node->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node *head, *second, *third, *fourth;
+
+    head = (struct Node*)malloc(sizeof(struct Node));
+    second = (struct Node*)malloc(sizeof(struct Node));
+    third = (struct Node*)malloc(sizeof(struct Node));
+    fourth = (struct Node*)malloc(sizeof(struct Node));
+
+    head->data = 1; head->next = second;
+    second->data = 2; second->next = third;
+    third->data = 3; third->next = fourth;
+    fourth->data = 4; fourth->next = second; // Creates loop
+
+    detectAndRemoveLoop(head);
+    printList(head);
+
+    return 0;
+}
